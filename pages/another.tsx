@@ -6,11 +6,14 @@ export default function Another({ a }: { a: number }) {
   return (
     <main>
       <h1>Another - {a}</h1>
-      <button
-        className="bg-gray-800 rounded my-4 p-4"
-        onClick={() => router?.push("/", undefined, { shallow: true })}
-      >
+      <button onClick={() => router?.push("/", undefined, { shallow: true })}>
         go home page
+      </button>
+
+      <button
+        onClick={() => router?.push("/ssr", undefined, { shallow: true })}
+      >
+        go ssr page
       </button>
     </main>
   );
@@ -22,5 +25,6 @@ export const getStaticProps = () => {
     props: {
       a: 20,
     },
+    revalidate: 30,
   };
 };

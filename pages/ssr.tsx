@@ -1,11 +1,30 @@
 import { useRouter } from "next/compat/router";
 
-export default function Home({ a }: { a: number }) {
+export default function SSRPage({ a }: { a: number }) {
   const router = useRouter();
 
   return (
     <main>
-      <h1>Home - {a}</h1>
+      <h1>SSR Page - {a}</h1>
+
+      <button
+        onClick={() =>
+          router?.push(
+            {
+              pathname: "/",
+              query: {
+                a: 1,
+              },
+            },
+            undefined,
+            {
+              shallow: true,
+            },
+          )
+        }
+      >
+        go home
+      </button>
       <button
         onClick={() =>
           router?.push(
@@ -22,37 +41,17 @@ export default function Home({ a }: { a: number }) {
           )
         }
       >
-        go to another page
-      </button>
-
-      <button
-        onClick={() =>
-          router?.push(
-            {
-              pathname: "/ssr",
-              query: {
-                a: 1,
-              },
-            },
-            undefined,
-            {
-              shallow: true,
-            },
-          )
-        }
-      >
-        go to ssr
+        go another
       </button>
     </main>
   );
 }
 
-export const getStaticProps = () => {
-  console.log("gsp running");
+export const getServerSidePRosp = () => {
+  console.log("gssp running");
   return {
     props: {
       a: 10,
     },
-    revalidate: 30,
   };
 };
